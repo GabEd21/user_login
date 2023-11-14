@@ -1,4 +1,5 @@
 import React from 'react';
+import TextBoxInput from './TextBoxInput';
 
 class UserLoginForm extends React.Component {
   state = {
@@ -11,7 +12,7 @@ class UserLoginForm extends React.Component {
   handleInputChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
-      loginSuccess: false, // Reset login success status when input changes
+      loginSuccess: false,
     });
   };
 
@@ -20,16 +21,16 @@ class UserLoginForm extends React.Component {
     const { username, password } = this.state;
     const database = [
       {
-        username: "user1",
-        password: "pass1"
+        username: 'user1',
+        password: 'pass1',
       },
       {
-        username: "user2",
-        password: "pass2"
-      }
+        username: 'user2',
+        password: 'pass2',
+      },
     ];
 
-    const match = database.find(entry => entry.username === username && entry.password === password);
+    const match = database.find((entry) => entry.username === username && entry.password === password);
 
     if (match) {
       this.setState({ alertColor: 'green', loginSuccess: true });
@@ -39,15 +40,14 @@ class UserLoginForm extends React.Component {
   };
 
   render() {
-    const inputStyle = {
-      marginBottom: '10px',
-      width: '200px',
-      padding: '5px',
+    const darkTheme = {
+      backgroundColor: '#333',
+      color: '#fff',
     };
 
     const buttonStyle = {
+      ...darkTheme,
       backgroundColor: '#4CAF50',
-      color: 'white',
       padding: '10px 20px',
       border: 'none',
       borderRadius: '4px',
@@ -55,6 +55,7 @@ class UserLoginForm extends React.Component {
     };
 
     const formContainer = {
+      ...darkTheme,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -62,8 +63,8 @@ class UserLoginForm extends React.Component {
     };
 
     const alertContainer = {
+      ...darkTheme,
       padding: '10px',
-      color: 'white',
       textAlign: 'center',
       width: '200px',
       borderRadius: '4px',
@@ -73,31 +74,34 @@ class UserLoginForm extends React.Component {
     return (
       <div style={formContainer}>
         <form style={{ textAlign: 'center' }} onSubmit={this.handleSubmit}>
-        <div style={{ ...alertContainer, backgroundColor: this.state.alertColor }}>
-          {this.state.loginSuccess ? 'Login successful!' : 'Login failed!'}
-        </div>
-          <div style={inputStyle}>
-            <label>Username</label>
-            <input
-              type="text"
-              name="username"
-              value={this.state.username}
-              onChange={this.handleInputChange}
-              required
-            />
-          </div>
-          <div style={inputStyle}>
-            <label>Password</label>
-            <input
-              type="password"
-              name="password"
-              value={this.state.password}
-              onChange={this.handleInputChange}
-              required
-            />
-          </div>
+          {this.state.alertColor === 'red' && (
+            <div style={{ ...alertContainer, backgroundColor: this.state.alertColor }}>
+              Login failed!
+            </div>
+          )}
+          {this.state.loginSuccess && (
+            <div style={{ ...alertContainer, backgroundColor: 'green' }}>Login successful!</div>
+          )}
+          <TextBoxInput
+            label="Username"
+            type="text"
+            name="username"
+            value={this.state.username}
+            onChange={this.handleInputChange}
+            required
+          />
+          <TextBoxInput
+            label="Password"
+            type="password"
+            name="password"
+            value={this.state.password}
+            onChange={this.handleInputChange}
+            required
+          />
           <div>
-            <button style={buttonStyle} type="submit">Submit</button>
+            <button style={buttonStyle} type="submit">
+              Submit
+            </button>
           </div>
         </form>
       </div>
