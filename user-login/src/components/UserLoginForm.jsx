@@ -90,6 +90,7 @@ class UserLoginForm extends React.Component {
             name="username"
             value={this.state.username}
             onChange={this.handleInputChange}
+            placeholder = 'Username'
             required
           />
           <TextBoxInput
@@ -98,10 +99,11 @@ class UserLoginForm extends React.Component {
             name="password"
             value={this.state.password}
             onChange={this.handleInputChange}
+            placeholder = 'Password'
             required
           />
           <div>
-            <Button style={buttonStyle} type="submit">
+            <Button style={buttonStyle} type="submit" disabled = {false}>
               Submit
             </Button>
           </div>

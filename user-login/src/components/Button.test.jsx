@@ -1,6 +1,7 @@
 import {render,screen} from `@testing-library/react`
 import Button from `./Button`;
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+import { fireEvent } from "@testing-library/react";
  
 describe('Button', () => {
     it('should render the Button', () => {
@@ -18,11 +19,18 @@ describe('Button', () => {
     });
 
     it('should be able to click', () => {
-       const fn = vl.fn()
-       render(<Button onClick = {fn}/>);
-       
-       
-       expect(fn).toHaveBeenCalled()
+       const func = vi.fn()
+       render(<Button onClick={func} disabled={false}>Hey</Button>);
+       fireEvent.click(screen.getByRole('button'))
+       expect(func).toHaveBeenCalledOnce()
     });
+
+    it('should render the text', () => {
+      const buttonText = 'Click me';
+      render(<Button text={buttonText} />);
+      const buttonElement = screen.getByText(buttonText);
+      expect(buttonElement).toBeInTheDocument();
+
+   });
       
   });

@@ -1,7 +1,6 @@
-// TextBoxInput.jsx
 import React from 'react';
 
-const TextBoxInput = ({ label, type, name, value, onChange, required }) => {
+const TextBoxInput = ({ label, type, name, value, onChange, required, placeholder }) => {
   const darkTheme = {
     backgroundColor: '#333',
     color: '#fff',
@@ -19,11 +18,13 @@ const TextBoxInput = ({ label, type, name, value, onChange, required }) => {
     <div style={inputStyle}>
       <label>{label}</label>
       <input
+        data-testid='textbox'
         type={type}
         name={name}
         value={value}
         onChange={onChange}
         required={required}
+        placeholder={placeholder}
       />
     </div>
   );
